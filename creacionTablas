@@ -1,0 +1,38 @@
+/*CREATE DATABASE complejo_teatral
+USE complejo_teatral*/
+
+create table teatro(
+	id_teatro int not null primary key identity(1,1),
+	nombre varchar(50) not null,
+	anio_fundacion int not null
+)
+create table salas(
+	id_sala int not null primary key identity(1,1),
+	nombre varchar(50) not null,
+	capacidad_max int not null,
+	microfono_ambiente bit not null,
+	maquina_humo bit not null,
+	id_teatro int not null foreign key references teatro(id_teatro)
+)
+create table espectaculos(
+	id_espectaculo int not null primary key identity(1,1),
+	nombre varchar(50) not null,
+	nombre_director varchar(30) not null,
+	descripcion varchar(100) not null
+)
+create table cartelera(
+	id_cartelera int not null primary key identity(1,1),
+	anio_mes int not null,
+	id_espectaculo int not null foreign key references espectaculos(id_espectaculo),
+	id_sala int not null foreign key references salas(id_sala)
+)
+create table funciones(
+	id_funcion int not null primary key identity(1,1),
+	id_espectaculo int not null foreign key references espectaculos(id_espectaculo),
+	id_sala int not null foreign key references salas(id_sala),
+	estado_funcion char not null,
+	reservadas int not null,
+	vendidas int not null,
+	espectadores int not null,
+	fecha date not null
+)
