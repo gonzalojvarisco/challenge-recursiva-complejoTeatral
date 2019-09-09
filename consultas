@@ -1,0 +1,17 @@
+--consulta 1
+select e.nombre, e.nombre_director, COUNT(*) AS cantidad from espectaculos as e
+inner join cartelera as c on c.id_espectaculo=e.id_espectaculo
+group by e.nombre, e.nombre_director, c.id_espectaculo
+order by COUNT(*) desc
+
+--consulta 2 
+SELECT e.nombre, SUM( f.espectadores ) AS cant_espect, s.nombre FROM funciones as f 
+INNER JOIN espectaculos as e ON e.id_espectaculo = f.id_espectaculo 
+inner join salas as s on s.id_sala=f.id_sala
+GROUP BY e.nombre, e.id_espectaculo, s.nombre
+order by e.nombre
+
+--consulta 3
+select e.nombre, f.reservadas as reservadas, f.vendidas as vendidas, f.fecha from espectaculos as e
+inner join funciones as f on f.id_espectaculo=e.id_espectaculo
+where f.reservadas>f.vendidas and f.estado_funcion='f'
